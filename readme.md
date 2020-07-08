@@ -13,9 +13,10 @@ Usage:
 -----------
 
 Run the following code from the command line:
+```
 Rscript UpstreamRegulatorPlot_call.R "/path/to/input/directory" "UpsteamRegulators.csv" 
 
 e.g. Rscript UpstreamRegulatorPlot_call.R ../rawData/ lmp.ola_ctrl_upstream_923.csv 
-
+```
 
 ![workflow chart](https://github.com/da-yin/IPAexplorer/blob/master/analysis/results/lmp.ola_ctrl_upstream_923.png)
