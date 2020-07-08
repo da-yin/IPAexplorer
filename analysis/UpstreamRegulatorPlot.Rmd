@@ -63,8 +63,10 @@ ggplot(my_data, aes(fill=Molecule.Type)) +
     xlab("Upstream Regulator")+ geom_hline(yintercept = 0, linetype="dotted", color = "darkgrey", size=1) 
 
 
-pdf(file = paste0(gsub(".csv","",fileName), ".pdf"), width = 9, height = 9)
+pdf(file = paste0("results/",gsub(".csv","",fileName), ".pdf"), width = 9, height = 9)
 print(UpstreamRegulatorPlot)
 dev.off()
+png(file = paste0("results/", gsub(".csv","",fileName), ".png"), width = 8, height = 7, units = 'in',res = 300)
 print(UpstreamRegulatorPlot)
+dev.off()
 ```
