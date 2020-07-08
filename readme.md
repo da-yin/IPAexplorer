@@ -9,4 +9,4 @@ UpstreamRegulatorPlot.Rmd:
 
 This code takes input from the IPA Upstream Analysis table, creates single plot that shows the top upstream regulators of each molecule type (e.g. transcription regulator, kinase, etc..) with their Activation Z-score and P value.
 
-![workflow chart](https://https://github.com/da-yin/IPAexplorer/blob/master/analysis/results/lmp.ola_ctrl_upstream_923.pdf)
+![workflow chart](https://github.com/da-yin/IPAexplorer/blob/master/analysis/results/lmp.ola_ctrl_upstream_923.png)
