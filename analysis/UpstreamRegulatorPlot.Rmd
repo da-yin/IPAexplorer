@@ -1,18 +1,35 @@
 ---
 title: "UpstreamRegulatorPlot"
 author: "Da"
-date: "7/7/2020"
+date: '`r format(Sys.time(), "%a %b %d %Y - %X")`'
 output: html_document
+params:
+  folder: "/path/to/input/directory"
+  data: "/path/to/UpsteamRegulators.csv"
+ # number_of_molecules: "4"
 ---
 
 UpstreamRegulatorPlot:
 -----------
 
-This code takes input from the IPA Upstream Analysis table, creates single plot that shows the top upstream regulators of each molecule type (e.g. transcription regulator, kinase, etc..) with their Activation Z-score and P value
+This code takes input from the IPA Upstream Analysis table, creates single plot that shows the top 5 upstream regulators of each molecule type ("transcription regulator","phosphatase","enzyme","kinase","cytokine","growth factor","ligand-dependent nuclear receptor","transmembrane receptor") with their Activation Z-score and P value
+
+Usage:
+-----------
+
+Run the following code from the command line:
+Rscript UpstreamRegulatorPlot_call.R "/path/to/input/directory" "UpsteamRegulators.csv" 
+
+e.g. Rscript UpstreamRegulatorPlot_call.R ../rawData/ lmp.ola_ctrl_upstream_923.csv 
 
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
+
+inputDir <- params$folder
+fileName = params$data
+#number_of_molecules <- params$number
+
 
 ```
 
@@ -26,9 +43,12 @@ theme_set(theme_classic())
 ```
 
 ```{r}
-fileName = "lmp.ola_ctrl_upstream_923.csv"
 
-upstream = read.csv("../rawData/lmp.ola_ctrl_upstream_923.csv", header = T)
+upstream = read.csv(paste0(inputDir, fileName), header = T)
+
+#fileName = "lmp.ola_ctrl_upstream_923.csv"
+
+#upstream = read.csv("../rawData/lmp.ola_ctrl_upstream_923.csv", header = T)
 
 #upstream = read.csv("../processedData/IPA/lmp.ola_ctrl_upstream_923.csv", header = T)
 upstream$log10P = -log10(upstream$p.value.of.overlap)
@@ -38,7 +58,7 @@ types = c("transcription regulator","phosphatase","enzyme","kinase","cytokine","
 myList = list()
 for (i in types){
   myList[[i]] = upstream[which(upstream$Molecule.Type==i),]
-  myList[[i]] = top_n(x = myList[[i]], n = 4, wt = -p.value.of.overlap)
+  myList[[i]] = top_n(x = myList[[i]], n = 5, wt = -p.value.of.overlap)
 }
 
 my_data = do.call(dplyr::bind_rows, myList)
@@ -63,10 +83,16 @@ ggplot(my_data, aes(fill=Molecule.Type)) +
     xlab("Upstream Regulator")+ geom_hline(yintercept = 0, linetype="dotted", color = "darkgrey", size=1) 
 
 
-pdf(file = paste0("results/",gsub(".csv","",fileName), ".pdf"), width = 9, height = 9)
+pdf(file = paste0(gsub(".csv","",fileName), ".pdf"), width = 9, height = 9)
 print(UpstreamRegulatorPlot)
 dev.off()
-png(file = paste0("results/", gsub(".csv","",fileName), ".png"), width = 8, height = 7, units = 'in',res = 300)
+png(file = paste0(gsub(".csv","",fileName), ".png"), width = 8, height = 7, units = 'in',res = 300)
 print(UpstreamRegulatorPlot)
 dev.off()
+
 ```
+
+```{r fig.width=8, fig.height=8}
+print(UpstreamRegulatorPlot)
+```
+
