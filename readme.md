@@ -12,7 +12,7 @@ This code takes input from the IPA Upstream Analysis table, creates single plot 
 Usage:
 -----------
 
-Run the following code from the command line:
+Copy UpstreamRegulatorPlot.Rmd and UpstreamRegulatorPlot_call.R to your working directory. Place the IPA upstream analysis table in input directory. Then run the following code from the command line:
 ```
 Rscript UpstreamRegulatorPlot_call.R "/path/to/input/directory" "UpsteamRegulators.csv" 
 
